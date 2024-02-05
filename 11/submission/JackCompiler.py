@@ -876,8 +876,6 @@ class JackCompiler:
         print(vm_code_generator.vm_codes)
         vm_code_generator.close()
 
-
-    
     def analyze(self):
         for file in self.files:
             self.analyze_one_file(file)
@@ -1162,15 +1160,15 @@ class VMWriter:
             self.write_push("constant", int(element.text.strip()))
         elif term.find("./stringConstant"):
             return  # TODO: handle string
-        elif term.find("./keyword") is not None and len(term.findall("./keyword")) == 1: #TODO: only handle 'true', 'false' and 'this', missing null
+        elif term.find("./keyword") is not None and len(term.findall("./keyword")) == 1: 
             element = term.find("./keyword")
             keyword_text = element.text.strip()
             if keyword_text == 'true':
                 # 'true': '-1'
                 self.write_push("constant", 1)
                 self.write_arithmetic('neg')
-            elif keyword_text == 'false':
-                # 'false': '0'
+            elif keyword_text == 'false' or keyword_text == 'null':
+                # 'false': '0'; 'null': '0'
                 self.write_push("constant", 0)
             elif keyword_text == 'this':
                 self.write_push("pointer", 0)
@@ -1218,14 +1216,12 @@ class VMWriter:
             
             expression_list = term.find("./expressionList")
             self.compile_subroutine_call(subroutine_name, expression_list, is_object_method_call)
-
-            
+       
     def compile_class_var_dec(self, class_var_dec):
         vars = class_var_dec.findall("./identifier")
         for var in vars:
             if var.attrib["category"] == "field" and var.attrib["purpose"] == "defined":
                 self.class_var_count += 1
-
 
     def compile(self):
         # part.1 classVarDec*
