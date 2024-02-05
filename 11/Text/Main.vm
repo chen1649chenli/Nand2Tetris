@@ -1,0 +1,30 @@
+function Main.main 2
+push constant 0
+pop local 0
+push constant 1
+neg
+pop local 1
+label WHILE_LABEL_TRUE_0
+push local 1
+not
+if-goto WHILE_LABEL_FALSE_1
+push local 0
+call Output.printInt 1
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+push local 0
+push constant 9
+gt
+not
+if-goto IF_LABEL_FALSE_0
+push constant 0
+pop local 1
+goto IF_LABEL_NEXT_1
+label IF_LABEL_FALSE_0
+label IF_LABEL_NEXT_1
+goto WHILE_LABEL_TRUE_0
+label WHILE_LABEL_FALSE_1
+return

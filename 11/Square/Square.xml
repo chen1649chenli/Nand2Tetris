@@ -1,0 +1,1274 @@
+<class>
+  <keyword> class </keyword>
+  <identifier category="class" purpose="defined"> Square </identifier>
+  <symbol> { </symbol>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier category="field" purpose="defined" index="0" type="int"> x </identifier>
+    <symbol> , </symbol>
+    <identifier category="field" purpose="defined" index="1" type="int"> y </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier category="field" purpose="defined" index="2" type="int"> size </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <subroutineDec>
+    <keyword> constructor </keyword>
+    <identifier category="class" purpose="used"> Square </identifier>
+    <identifier category="subroutine" purpose="defined"> new </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="0" type="int"> Ax </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="1" type="int"> Ay </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="2" type="int"> Asize </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="0" type="int"> x </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="0" purpose="used" type="int"> Ax </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="1" type="int"> y </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="1" purpose="used" type="int"> Ay </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="2" type="int"> size </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="2" purpose="used" type="int"> Asize </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="subroutine" purpose="used"> draw </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <keyword> this </keyword>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> dispose </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="class" purpose="used"> Memory </identifier>
+          <symbol> . </symbol>
+          <identifier category="subroutine" purpose="used"> deAlloc </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> this </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> draw </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="class" purpose="used"> Screen </identifier>
+          <symbol> . </symbol>
+          <identifier category="subroutine" purpose="used"> setColor </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> true </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="class" purpose="used"> Screen </identifier>
+          <symbol> . </symbol>
+          <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> erase </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="class" purpose="used"> Screen </identifier>
+          <symbol> . </symbol>
+          <identifier category="subroutine" purpose="used"> setColor </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> false </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier category="class" purpose="used"> Screen </identifier>
+          <symbol> . </symbol>
+          <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> incSize </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                    </term>
+                    <symbol> + </symbol>
+                    <term>
+                      <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+                <symbol> &lt; </symbol>
+                <term>
+                  <integerConstant> 254 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+            <symbol> &amp; </symbol>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                    </term>
+                    <symbol> + </symbol>
+                    <term>
+                      <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+                <symbol> &lt; </symbol>
+                <term>
+                  <integerConstant> 510 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="subroutine" purpose="used"> erase </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="2" type="int"> size </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="subroutine" purpose="used"> draw </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> decSize </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+            </term>
+            <symbol> &gt; </symbol>
+            <term>
+              <integerConstant> 2 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="subroutine" purpose="used"> erase </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="2" type="int"> size </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                </term>
+                <symbol> - </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="subroutine" purpose="used"> draw </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> moveUp </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+            </term>
+            <symbol> &gt; </symbol>
+            <term>
+              <integerConstant> 1 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> false </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                      </term>
+                      <symbol> + </symbol>
+                      <term>
+                        <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                  <symbol> - </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="1" type="int"> y </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                </term>
+                <symbol> - </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> true </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> moveDown </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+            <symbol> &lt; </symbol>
+            <term>
+              <integerConstant> 254 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> false </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="1" type="int"> y </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> true </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                      </term>
+                      <symbol> + </symbol>
+                      <term>
+                        <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                  <symbol> - </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> moveLeft </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+            </term>
+            <symbol> &gt; </symbol>
+            <term>
+              <integerConstant> 1 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> false </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                      </term>
+                      <symbol> + </symbol>
+                      <term>
+                        <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                  <symbol> - </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="0" type="int"> x </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                </term>
+                <symbol> - </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> true </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier category="subroutine" purpose="defined"> moveRight </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Square </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Square"> this </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+            <symbol> &lt; </symbol>
+            <term>
+              <integerConstant> 510 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> false </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier category="field" purpose="used" index="0" type="int"> x </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <keyword> true </keyword>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier category="class" purpose="used"> Screen </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                      </term>
+                      <symbol> + </symbol>
+                      <term>
+                        <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                  <symbol> - </symbol>
+                  <term>
+                    <integerConstant> 1 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <identifier category="field" index="2" purpose="used" type="int"> size </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>

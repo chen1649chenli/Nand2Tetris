@@ -1,0 +1,85 @@
+<class>
+  <keyword> class </keyword>
+  <identifier category="class" purpose="defined"> Square </identifier>
+  <symbol> { </symbol>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier category="field" purpose="defined" index="0"> x </identifier>
+    <symbol> , </symbol>
+    <identifier category="field" purpose="defined" index="1"> y </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier category="field" purpose="defined" index="2"> size </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <subroutineDec>
+    <keyword> constructor </keyword>
+    <identifier category="class" purpose="used"> Square </identifier>
+    <identifier category="subroutine" purpose="defined"> new </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="0"> Ax </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="1"> Ay </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier category="argument" purpose="defined" index="2"> Asize </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="0"> x </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="0" purpose="used"> Ax </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="1"> y </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="1" purpose="used"> Ay </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="field" purpose="used" index="2"> size </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="argument" index="2" purpose="used"> Asize </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <keyword> this </keyword>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>

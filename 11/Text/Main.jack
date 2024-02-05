@@ -1,0 +1,18 @@
+class Main {
+    function void main() {
+        var int i;
+        var boolean loop;
+        let i = 0;
+        let loop = true;
+        while (loop) {
+            do Output.printInt(i);
+            let i = i + 1;
+            if (i > 9) {
+               let loop = false;
+            }
+        }
+        return;
+    }
+    
+
+}

@@ -1,0 +1,14 @@
+function Main1.main 1
+push constant 3
+pop local 0
+push local 0
+push constant 1
+gt
+not
+if-goto IF_LABEL_FALSE_0
+push constant 1
+call Output.printInt 1
+pop temp 0
+goto IF_LABEL_NEXT_1
+label IF_LABEL_FALSE_0
+label IF_LABEL_NEXT_1

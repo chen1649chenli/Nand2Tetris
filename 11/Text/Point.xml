@@ -1,0 +1,133 @@
+<class>
+  <keyword> class </keyword>
+  <identifier category="class" purpose="defined"> Point </identifier>
+  <symbol> { </symbol>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier category="field" purpose="defined" index="0" type="int"> x </identifier>
+    <symbol> , </symbol>
+    <identifier category="field" purpose="defined" index="1" type="int"> y </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> static </keyword>
+    <keyword> int </keyword>
+    <identifier category="static" purpose="defined" index="0" type="int"> pointCount </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> int </keyword>
+    <identifier category="subroutine" purpose="defined"> distance </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <identifier category="class" purpose="used"> Point </identifier>
+      <identifier category="argument" purpose="defined" index="0" type="Point"> this </identifier>
+      <identifier category="class" purpose="used"> Point </identifier>
+      <identifier category="argument" purpose="defined" index="1" type="Point"> other </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier category="local" purpose="defined" index="0" type="int"> dx </identifier>
+        <symbol> , </symbol>
+        <identifier category="local" purpose="defined" index="1" type="int"> dy </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="local" purpose="used" index="0" type="int"> dx </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="field" index="0" purpose="used" type="int"> x </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <identifier category="argument" index="1" purpose="used" type="Point"> other </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> getx </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier category="local" purpose="used" index="1" type="int"> dy </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier category="field" index="1" purpose="used" type="int"> y </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <identifier category="argument" index="1" purpose="used" type="Point"> other </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> gety </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <identifier category="class" purpose="used"> Math </identifier>
+              <symbol> . </symbol>
+              <identifier category="subroutine" purpose="used"> sqrt </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="local" index="0" purpose="used" type="int"> dx </identifier>
+                      </term>
+                      <symbol> * </symbol>
+                      <term>
+                        <identifier category="local" index="0" purpose="used" type="int"> dx </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                  <symbol> + </symbol>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier category="local" index="1" purpose="used" type="int"> dy </identifier>
+                      </term>
+                      <symbol> * </symbol>
+                      <term>
+                        <identifier category="local" index="1" purpose="used" type="int"> dy </identifier>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>

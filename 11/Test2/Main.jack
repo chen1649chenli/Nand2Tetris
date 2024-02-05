@@ -1,0 +1,9 @@
+class Main {
+    function void main() {
+        var Square sq;
+        let sq = Square.new(10, 15, 20);
+        do sq.draw();
+
+        return;
+    }
+}

@@ -1,0 +1,35 @@
+function Point.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push static 0
+push constant 1
+add
+pop static 0
+push pointer 0
+return
+function Point.getx 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Point.gety 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Point.print 0
+push argument 0
+pop pointer 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push this 1
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
