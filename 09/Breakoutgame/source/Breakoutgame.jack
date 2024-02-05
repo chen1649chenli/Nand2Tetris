@@ -1,0 +1,312 @@
+/** Breakout game */
+
+class Breakoutgame{
+	// brick
+	field Brick brick;
+	// width of the brick
+	field int width;
+	// height of the brick
+	field int height;
+	// number of bricks in each row
+	field int row;
+	// number of rows of bricks
+	field int col;
+	// brick's start location of x
+	field int x;
+	// brick's start location of y
+	field int y;
+	// separation between neighboring bricks, in pixels
+	field int sep;
+	// array to store bricks
+	field Array Bricks;
+	
+	// Counter
+	field int i, j;
+
+	// paddle
+	field Paddle paddle;
+	// width of the paddle
+	field int paddle_width;
+	// height of the paddle
+	field int paddle_height;
+	// x location of paddle
+	field int paddle_x;
+	// y location of paddle
+	field int paddle_y;
+	// paddle's direction
+	field int direction;
+	
+	// ball
+	field Ball ball;
+	// x location of ball
+	field int ball_x;
+	// y location of ball
+	field int ball_y;
+	// r of ball
+	field int ball_r;
+	
+	// whether fail
+	field int flag;
+	// judge whether hit the brick in a double loop
+	field int judge;
+	// judge whether hit the brick in a loop
+	field int p;
+	// count the number of finished bricks
+	field int cnt;
+	
+	/** Constructs a new Breakout Game. */
+	constructor Breakoutgame new() {
+		// brick
+		let row = 5;
+		let col = 8;
+		let width = 60;
+		let height = 12;
+		let x = 0;
+		let y = 30;
+		let sep = 4;
+		let Bricks = Array.new(row * col);
+		
+		// paddle
+		let paddle_height = 10;
+		let paddle_width = 80;
+		let paddle_x = 216;
+		let paddle_y = 240;
+		let direction = 0;
+		
+		// ball
+		let ball_x = 256;
+		let ball_y = 200;
+		let ball_r = 2;
+		
+		// counter
+		let i = 0;
+		let j = 0;
+		let cnt = 0;
+		
+		// initialization
+		let flag = 0;
+		let judge = 0;
+		let p = 0;
+		
+		// Set up bricks
+		while (i < col){
+			let j = 0;
+			while (j < row){
+				let brick = Brick.new(x + (i * (width + sep)), y + (j * (height + sep)),
+									  width, height);
+				let Bricks[i * row + j] = brick;
+				let j = j + 1;
+			}
+			let i = i + 1;
+		}
+
+		// Set up ball
+		let ball = Ball.new(ball_x, ball_y, ball_r);
+		
+		// Set up paddle
+		let paddle = Paddle.new(paddle_x, paddle_y, paddle_width, paddle_height);
+		
+		// Run the game
+		do run();
+
+		return this;
+	}
+	
+	/** Moves the paddle in the current direction. */
+	method void movePaddle() {
+		//do Output.printInt(1);
+		if (direction = 1) { do paddle.moveLeft(); }
+		if (direction = 2) { do paddle.moveRight(); }
+		do Sys.wait(3);  // delays the next movement
+		return;
+	}
+	
+	/** Run the game */
+	method void run() {
+		var char key;  // the key currently pressed by the user
+		var boolean exit;
+		let exit = false;
+
+		while (~exit) {
+			// waits for a key to be pressed
+			while (key = 0) {
+				let key = Keyboard.keyPressed();
+				do movePaddle();
+				// if fail, restart
+				if (flag = 1) {
+					do paddle.erase();
+					do ball.erase();
+					let paddle = Paddle.new(paddle_x, paddle_y, paddle_width, paddle_height);
+					let ball = Ball.new(ball_x, ball_y, ball_r);
+					let flag = 0;
+				}
+				// refresh the state
+				do Ball_state();
+				// move the ball
+				do Ball_run();
+				// if finish, break the game
+				if (cnt = (row * col)) {
+					let exit = true;
+				}
+			}
+			if (key = 81)  { let exit = true; }     // q key
+			if (key = 130) { let direction = 1; }   // left arrow
+			if (key = 132) { let direction = 2; }   // right arrow
+
+			// waits for the key to be released
+			while (~(key = 0)) {
+				let key = Keyboard.keyPressed();
+				do movePaddle();
+				// if fail, restart
+				if (flag = 1) {
+					do Output.printInt(1);
+					do paddle.erase();
+					do ball.erase();
+					let paddle = Paddle.new(paddle_x, paddle_y, paddle_width, paddle_height);
+					let ball = Ball.new(ball_x, ball_y, ball_r);
+					let flag = 0;
+				}
+				// refresh the state
+				do Ball_state();
+				// move the ball
+				do Ball_run();
+				// if finish, break the game
+				if (cnt = (row * col)) {
+					let exit = true;
+				}
+			}
+		} // while
+		
+		
+		return;
+	}
+	
+	/** Change the state of the ball */
+	method void Ball_state() {
+	
+		// change the state when hit the wall
+		if (((ball.x() + ball.r()) = 511)) {
+			do ball.set_directionx(1);
+		}
+
+		if (((ball.x() - ball.r()) = 1)) {
+			do ball.set_directionx(0);
+		}
+		
+		if (((ball.y() + ball.r()) = 255)) {
+			do ball.set_directiony(1);
+		}
+
+		if (((ball.y() - ball.r()) = 1)) {
+			do ball.set_directiony(0);
+		}
+		
+		// change the state when hit the paddle
+		if (((ball.y() + ball.r()) = (paddle.y() - 1)) & (ball.x() > paddle.x())
+												 & (ball.x() < (paddle.x() + paddle_width))) {
+			do ball.set_directiony(1);
+		}
+		
+		// judge whether fail
+		if (((ball.y() + ball.r()) > (paddle.y() - 1)) | 
+			(((ball.y() + ball.r()) = paddle.y()) & (ball.x() < paddle.x())) |
+			(((ball.y() + ball.r()) = paddle.y()) & (ball.x() > (paddle.x() + paddle_width)))) {	
+			let flag = 1;
+			return;
+		}
+		
+		// change the state when hit the brick
+		// Counter
+		let i = 0;
+		let j = 0;
+		let p = 0;
+		
+		while ((i < col) & (p = 0)){
+			let j = 0;
+			while ((j < row) & (p = 0)){
+				let brick = Bricks[i * row + j];
+				let judge = 0;
+				if (brick.state() = 1) {
+					if (((ball.x() + ball.r()) = brick.x()) &
+						(ball.y() > (brick.y() - ball_r)) &
+						(ball.y() < (brick.y() + brick.height() + ball_r)) &
+						(judge = 0)) {
+						do ball.set_directionx(1);
+						do brick.set_state(0);
+						do brick.erase();
+						let judge = 1;
+						let p = 1;
+						let Bricks[i * row + j] = brick;
+						let cnt = cnt + 1;
+					}
+
+					if (((ball.x() - ball.r()) = (brick.x() + brick.width())) &
+						(ball.y() > (brick.y() - ball_r)) &
+						(ball.y() < (brick.y() + brick.height() + ball_r)) &
+						(judge = 0)) {
+						do ball.set_directionx(0);
+						do brick.set_state(0);
+						do brick.erase();
+						let judge = 1;
+						let p = 1;
+						let Bricks[i * row + j] = brick;
+						let cnt = cnt + 1;
+					}
+					
+					
+					if (((ball.y() + ball.r()) = brick.y()) &
+						(ball.x() > (brick.x() - ball_r)) & 
+						(ball.x() < (brick.x() + brick.width() + ball_r)) &
+						(judge = 0)){
+						do ball.set_directiony(1);
+						do brick.set_state(0);
+						do brick.erase();
+						let judge = 1;
+						let p = 1;
+						let Bricks[i * row + j] = brick;
+						let cnt = cnt + 1;
+					}
+
+					if (((ball.y() - ball.r()) = (brick.y() + brick.height())) &
+						(ball.x() > (brick.x() - ball_r)) & 
+						(ball.x() < (brick.x() + brick.width() + ball_r)) &
+						(judge = 0)) {
+						do ball.set_directiony(0);
+						do brick.set_state(0);
+						do brick.erase();
+						let judge = 1;
+						let p = 1;
+						let Bricks[i * row + j] = brick;
+						let cnt = cnt + 1;
+					}
+				}
+				let j = j + 1;
+			}
+			let i = i + 1;
+		}
+		return;
+	}
+	
+	
+	/** ball_run */
+	method void Ball_run() {
+		if ((ball.directionx() = 0) & (ball.directiony() = 0)){
+			do ball.moveDownRight();
+			//do Sys.wait(1);
+		}
+		if ((ball.directionx() = 0) & (ball.directiony() = 1)){
+			do ball.moveUpRight();
+			//do Sys.wait(1);
+		}
+		if ((ball.directionx() = 1) & (ball.directiony() = 0)){
+			do ball.moveDownLeft();
+			//do Sys.wait(1);
+		}
+		if ((ball.directionx() = 1) & (ball.directiony() = 1)){
+			do ball.moveUpLeft();
+			//do Sys.wait(1);
+		}	
+		return;
+	}
+
+}

@@ -1,0 +1,80 @@
+/** PADDLE */
+
+class Paddle{
+
+	// screen location of the square's top-left corner
+	field int x, y; 
+	// width of the paddle
+    field int width; 
+	// height of the paddle
+	field int height;
+	
+	/** Constructs a new paddle. */
+	constructor Paddle new(int Ax, int Ay, int w, int h) {
+		let x = Ax;
+		let y = Ay;
+		let width = w;
+		let height = h;
+		do draw();
+		return this;
+	}
+	
+	/** Draws the paddle on the screen. */
+	method void draw() {
+		do Screen.setColor(true);
+		do Screen.drawRectangle(x, y, x + width, y + height);
+		return;
+	}
+	
+   /** Moves the paddle left by 2 pixels. */
+   method void moveLeft() {
+      if (x > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle((x + width) - 1, y, x + width, y + height);
+         let x = x - 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x + 1, y + height);
+      }
+      return;
+   }
+   
+   /** Moves the paddle right by 2 pixels. */
+   method void moveRight() {
+      if ((x + width) < 510) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + 1, y + height);
+         let x = x + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle((x + width) - 1, y, x + width, y + height);
+      }
+      return;
+   }
+   
+	/** Erases the paddle from the screen. */
+	method void erase() {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x, y, x + width, y + height);
+		return;
+	}
+   
+	/** Return x. */
+	method int x() {
+		return x;
+	}
+	
+	/** Return y. */
+	method int y() {
+		return y;
+	}
+	
+	/** Return width. */
+	method int width() {
+		return width;
+	}
+	
+	/** Return height. */
+	method int height() {
+		return height;
+	}
+   
+}

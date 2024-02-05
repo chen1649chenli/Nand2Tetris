@@ -1,0 +1,10 @@
+/** Initialize a new Breakout game and starts running it. */
+class Main {
+    function void main() {
+        var BreakoutGame game;
+        let game = Breakoutgame.new();
+        do game.run();
+        // do game.dispose();
+        return;
+    }
+}

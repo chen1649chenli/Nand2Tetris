@@ -1,0 +1,127 @@
+/** BALL */
+
+class Ball{
+	
+	// screen location of the ball's center
+	field int x, y;
+	// radius of the ball
+	field int r;
+	// x direction of the ball, 0 means right, 1 means left
+	field int directionx;
+	// y direction of the ball, 0 means down, 1 means up
+	field int directiony;
+
+	/** Constructs a new ball. */
+	constructor Ball new(int Ax, int Ay, int Ar) {
+		let directionx = 0;
+		let directiony = 0;
+		let x = Ax;
+		let y = Ay;
+		let r = Ar;
+		do draw();
+		return this;
+	}
+	
+	/** Draw thet ball */
+	method void draw() {
+		do Screen.setColor(true);
+		do Screen.drawCircle(x, y, r);
+		return;
+	}
+	
+	/** Moves the ball left and up by 1 pixels. */
+	method void moveUpLeft(){
+		if (((x - r) > 1) & ((y - r) > 1)) {
+			do Screen.setColor(false);
+			do Screen.drawCircle(x, y, r);
+			let x = x - 1;
+			let y = y - 1;
+			do Screen.setColor(true);
+			do Screen.drawCircle(x, y, r);
+		}
+		return;
+	}
+	
+	/** Moves the ball left and down by 1 pixels. */
+	method void moveDownLeft(){
+		if (((x - r) > 1) & ((y + r) < 255)) {
+			do Screen.setColor(false);
+			do Screen.drawCircle(x, y, r);
+			let x = x - 1;
+			let y = y + 1;
+			do Screen.setColor(true);
+			do Screen.drawCircle(x, y, r);
+		}
+		return;
+	}
+	
+	/** Moves the ball right and up by 1 pixels. */
+	method void moveUpRight() {
+		if (((x + r) < 511) & ((y - r) > 1)) {
+			do Screen.setColor(false);
+			do Screen.drawCircle(x, y, r);
+			let x = x + 1;
+			let y = y - 1;
+			do Screen.setColor(true);
+			do Screen.drawCircle(x, y, r);
+		}
+		return;
+	}
+	
+	/** Moves the ball right and down by 1 pixels. */
+	method void moveDownRight() {
+		if (((x + r) < 511) & ((y + r) < 255)) {
+			do Screen.setColor(false);
+			do Screen.drawCircle(x, y, r);
+			let x = x + 1;
+			let y = y + 1;
+			do Screen.setColor(true);
+			do Screen.drawCircle(x, y, r);
+		}
+		return;
+	}
+	
+	/** Erase the ball. */
+	method void erase() {
+		do Screen.setColor(false);
+		do Screen.drawCircle(x, y, r);
+		return;
+	}
+	
+	/** Return radius. */
+	method int r() {
+		return r;
+	}
+	
+	/** Return x. */
+	method int x() {
+		return x;
+	}
+	
+	/** Return y. */
+	method int y() {
+		return y;
+	}
+	
+	/** Return directionx. */
+	method int directionx() {
+		return directionx;
+	}
+	
+	/** Return directiony. */
+	method int directiony() {
+		return directiony;
+	}
+	
+	/** Set directionx. */
+	method void set_directionx(int x){
+		let directionx = x;
+		return;
+	}
+	
+	/** Set directiony. */
+	method void set_directiony(int y){
+		let directiony = y;
+		return;
+	}
+}
