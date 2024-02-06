@@ -864,7 +864,7 @@ class JackCompiler:
         method_names = engine.get_method_names()
         print("=== Method Names:    " + str(method_names))
         class_name = engine.get_class_name()
-        print("=== Method Names:    " + class_name)
+        print("=== Class Names:    " + class_name)
 
         result = engine.format_xml_string()
         engine.save_xml_file(result)
@@ -1032,9 +1032,9 @@ class VMWriter:
             self.write_push("constant", self.class_var_count)
             self.write_call("Memory.alloc", 1)
             self.write_pop("pointer", 0)
-        # elif subroutine_dec.find("./keyword").text.strip() == "method":
-        #     self.write_push("argument", 0)
-        #     self.write_pop("pointer", 0) # THIS = argument 0
+        elif subroutine_dec.find("./keyword").text.strip() == "method":
+            self.write_push("argument", 0)
+            self.write_pop("pointer", 0) # THIS = argument 0
         
 
         # part.3 subroutine body
@@ -1167,7 +1167,7 @@ class VMWriter:
                 # 'true': '-1'
                 self.write_push("constant", 1)
                 self.write_arithmetic('neg')
-            elif keyword_text == 'false' or keyword_text == 'null':
+            elif keyword_text == 'false' or keyword_text == 'null': 
                 # 'false': '0'; 'null': '0'
                 self.write_push("constant", 0)
             elif keyword_text == 'this':
@@ -1176,7 +1176,7 @@ class VMWriter:
                 return
 
         # handle varName    
-        elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1:
+        elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1 and term.find("./identifier").attrib["category"] != "subroutine":
             element = term.find("./identifier")
             _category = element.attrib["category"]
             if _category == "field":
@@ -1202,9 +1202,19 @@ class VMWriter:
             identifiers = term.findall("./identifier")
             subroutine_name = ""
             is_object_method_call = 0
+            expression_list = term.find("./expressionList")
             if symbols[0].text.strip() == '.':
                 if identifiers[0].attrib['category'] != "class":  # This is a method call.
+                    # Push the reference of 'this' object onto the stack
+                    _segment = identifiers[0].attrib['category']
+                    _index = identifiers[0].attrib['index']
+                    self.write_push(_segment, int(_index))
+                    is_object_method_call = 1
+
                     subroutine_name = identifiers[0].attrib['type'] + "." + identifiers[1].text.strip()
+                elif identifiers[0].attrib['category'] == 'subroutine' and identifiers[0].text.strip() in self.method_names: # This is also a method call.
+                    # <identifier category="subroutine" purpose="used"> draw </identifier>
+                    subroutine_name = self.class_name + "." + identifiers[0].text.strip()
                 else:
                     # Output.printInt
                     # <identifier category="class" purpose="used"> Output </identifier>
@@ -1213,8 +1223,12 @@ class VMWriter:
                     subroutine_name = identifiers[0].text.strip() + "." + identifiers[1].text.strip()
             else:
                 subroutine_name = identifiers[0].text.strip()
+                # this is a method call within defining class itself.
+                if subroutine_name in self.method_names:
+                    subroutine_name = self.class_name + "." + subroutine_name
+                    self.write_push("pointer", 0)
+                    is_object_method_call = 1
             
-            expression_list = term.find("./expressionList")
             self.compile_subroutine_call(subroutine_name, expression_list, is_object_method_call)
        
     def compile_class_var_dec(self, class_var_dec):
