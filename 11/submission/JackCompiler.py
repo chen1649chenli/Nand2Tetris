@@ -548,6 +548,8 @@ class CompilationEngine:
         self.eat("keyword")
         self.output.append(f"<keyword> let </keyword>")
 
+        self.output.append("<term>")
+
         # varName
         _value = self.eat("identifier")
         #self.output.append(f"<identifier> {_value} </identifier>")
@@ -563,6 +565,8 @@ class CompilationEngine:
             self.compile_expression()
             self.output.append(f"<symbol> ] </symbol>")
             self.advance()
+
+        self.output.append("</term>")
 
         # '='
         self.eat("symbol")
@@ -892,7 +896,7 @@ class VMWriter:
             '+': 'add',
             '-': 'sub',
             '*': 'call Math.multiply 2',
-            # '/': 'call Math.divide 2',
+            '/': 'call Math.divide 2',
             '&': 'and',
             '|': 'or', 
             '<': 'lt', 
@@ -1116,18 +1120,20 @@ class VMWriter:
         self.write_label(while_false)
 
     def compile_let_statement(self, statement):
-        # case 1: expression = varName;
-        if len(statement.findall("./identifier")) == 1:
+        variable_term = statement.find("./term")
+
+        # case 1: variable = varName;
+        if variable_term.find("./symbol") == None:
             expression = statement.find("./expression")
             self.compile_expression(expression)
-            var = statement.find("./identifier")
+            var = variable_term.find("./identifier")
             _index = var.attrib["index"]
             _category = var.attrib["category"]
             if _category == "field":
                 self.write_pop("this", int(_index))
             else:
                 self.write_pop(_category, int(_index))
-        # case 2:  expression = varName[expression];
+        # case 2:  variable = varName[expression];
         else:
             print("_________AAAA______")
             return
