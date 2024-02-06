@@ -338,11 +338,11 @@ class CompilationEngine:
         self.output.append("<parameterList>")
 
         # Add 'this' as the first parameter of class method
-        if subroutine_type == 'method':
-            self.subroutine_symbol_table.define("this", class_name, VariableKind.ARG)
-            this_index = str(self.subroutine_symbol_table.index_of("this"))
-            self.output.append(f"<identifier category='class' purpose='used'> {class_name} </identifier>")
-            self.output.append(f"<identifier category='argument' purpose='defined' index='{this_index}' type='{class_name}'> this </identifier>")
+        # if subroutine_type == 'method':
+        #     self.subroutine_symbol_table.define("this", class_name, VariableKind.ARG)
+        #     this_index = str(self.subroutine_symbol_table.index_of("this"))
+        #     self.output.append(f"<identifier category='class' purpose='used'> {class_name} </identifier>")
+        #     self.output.append(f"<identifier category='argument' purpose='defined' index='{this_index}' type='{class_name}'> this </identifier>")
         
 
         # Check if there is at least one parameter
@@ -1204,9 +1204,11 @@ class VMWriter:
             is_object_method_call = 0
             expression_list = term.find("./expressionList")
             if symbols[0].text.strip() == '.':
-                if identifiers[0].attrib['category'] != "class":  # This is a method call.
+                if identifiers[0].attrib['category'] != "class":  # This is a method call object.method().
                     # Push the reference of 'this' object onto the stack
                     _segment = identifiers[0].attrib['category']
+                    if _segment == "field":
+                        _segment = "this"
                     _index = identifiers[0].attrib['index']
                     self.write_push(_segment, int(_index))
                     is_object_method_call = 1
