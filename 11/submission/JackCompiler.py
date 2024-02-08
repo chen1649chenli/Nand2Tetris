@@ -248,7 +248,10 @@ class CompilationEngine:
 
     def get_current_token_value(self):
         """Returns the type of the current token."""
-        return self.get_current_token().text.strip()   
+        if self.get_current_token().tag == "stringConstant":
+            return self.get_current_token().text[1:-1]
+        return self.get_current_token().text.strip()  
+
 
     def compile_var_dec(self):
         """
@@ -408,7 +411,7 @@ class CompilationEngine:
             self.advance()
         #stringConstant    
         elif _tag == "stringConstant":
-            self.output.append(f"<stringConstant> {_value} </stringConstant>")
+            self.output.append(f"<stringConstant> '{_value}' </stringConstant>")
             self.advance()
         # keywordConstant
         elif _tag == "keyword" and _value in self.key_constant:
@@ -1044,7 +1047,6 @@ class VMWriter:
         # part.3 subroutine body
         self.compile_subroutine_body(subroutine_dec.find("./subroutineBody"))
 
-
     def compile_parameter_list(self, parameter_list):
         return
 
@@ -1121,23 +1123,44 @@ class VMWriter:
 
     def compile_let_statement(self, statement):
         variable_term = statement.find("./term")
+        expression = statement.find("./expression")
+        var = variable_term.find("./identifier")
+        _index = var.attrib["index"]
+        _category = var.attrib["category"]
 
-        # case 1: variable = varName;
+        # case 1: let varName = ();
         if variable_term.find("./symbol") == None:
-            expression = statement.find("./expression")
+            # expression = statement.find("./expression")
             self.compile_expression(expression)
-            var = variable_term.find("./identifier")
-            _index = var.attrib["index"]
-            _category = var.attrib["category"]
+            # var = variable_term.find("./identifier")
+            # _index = var.attrib["index"]
+            # _category = var.attrib["category"]
             if _category == "field":
                 self.write_pop("this", int(_index))
             else:
                 self.write_pop(_category, int(_index))
-        # case 2:  variable = varName[expression];
+        # case 2: let arr[expression1] = expression2;
         else:
-            print("_________AAAA______")
-            return
-            # TODO: add code here
+            # push base address of the array
+            if _category == "field":
+                self.write_push("this", int(_index))
+            else:
+                self.write_push(_category, int(_index))
+            # push the array index
+            self.compile_expression(variable_term.find("./expression"))
+            # get the array element address. Top stack value = RAM address of arry[expression1]
+            self.write_arithmetic("add")
+
+            # VM code for computing and pushing the value of expresson2
+            self.compile_expression(expression)
+
+            # temp 0 = the value of expression 2; top stack value = RAM address of arr[expression1]
+            self.write_pop("temp", 0)
+
+            # update the THAT value
+            self.write_pop("pointer", 1)
+            self.write_push("temp", 0)
+            self.write_pop("that", 0)
 
     def compile_subroutine_call(self, subroutine_name, expression_list, is_object_method_call):
 
@@ -1164,8 +1187,24 @@ class VMWriter:
         if list(term)[0].tag == "integerConstant":
             element = term.find("./integerConstant")
             self.write_push("constant", int(element.text.strip()))
-        elif term.find("./stringConstant"):
-            return  # TODO: handle string
+        elif term.find("./stringConstant") is not None:
+            # Step 1: Create a new string object
+            str_constant = term.find("./stringConstant").text.strip()[1:-1]
+            str_length = len(str_constant)
+            self.write_push("constant", str_length) # push the length of the string
+            self.write_call("String.new", 1) # Call String.new with 1 argument (string length)
+            self.write_pop("temp", 0) # Temporarily store the reference to the new string object
+
+            # Step 2: Append characters in the string to the string object
+            for char in str_constant:
+                self.write_push("temp", 0) # Push the reference to the string object
+                self.write_push("constant", ord(char)) # ord return the Ascii value of char
+                self.write_call("String.appendChar", 2) # append the char to the string
+                self.write_pop("temp", 0)
+
+            # Final Step: Leave the string object reference on top of the stack
+            self.write_push("temp", 0) # Re-push the string object reference if you need to use it immediately after
+
         elif term.find("./keyword") is not None and len(term.findall("./keyword")) == 1: 
             element = term.find("./keyword")
             keyword_text = element.text.strip()
@@ -1181,6 +1220,27 @@ class VMWriter:
             else:
                 return
 
+        # handle array: arr[expression]
+        elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1 and term.find("./identifier").attrib["type"] == "Array" and len(term.findall("./symbol")) == 2:
+            # push arr
+            element = term.find("./identifier")
+            _category = element.attrib["category"]
+            if _category == "field":
+                _category = "this"
+            _index = element.attrib["index"]
+            self.write_push(_category, int(_index))
+
+            # push index
+            expression = term.find("./expression")
+            self.compile_expression(expression)
+
+            # push add
+            self.write_arithmetic("add")
+
+            # update the THAT value
+            self.write_pop("pointer", 1)
+            self.write_push("that", 0)
+
         # handle varName    
         elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1 and term.find("./identifier").attrib["category"] != "subroutine":
             element = term.find("./identifier")
@@ -1189,7 +1249,7 @@ class VMWriter:
                 _category = "this"
             _index = element.attrib["index"]
             self.write_push(_category, int(_index))
-        
+            
         # handle unaryOp term
         elif len(term.findall("./symbol")) == 1 and len(term.findall("./term")) == 1:
             _term = term.find("./term")
