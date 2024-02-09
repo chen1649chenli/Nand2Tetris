@@ -142,7 +142,9 @@ class JackTokenizer:
         string_pattern = r'"[^"\n]*"'
         identifier_pattern = r'[A-Za-z_]\w*'    
         # Combined pattern
-        token_pattern = f'({keyword_pattern})|({symbol_pattern})|({int_pattern})|({string_pattern})|({identifier_pattern})'
+        # token_pattern = f'({keyword_pattern})|({symbol_pattern})|({int_pattern})|({string_pattern})|({identifier_pattern})'
+        token_pattern = f'({identifier_pattern})|({string_pattern})|({int_pattern})|({symbol_pattern})'
+
 
         tokens = []
 
@@ -161,15 +163,15 @@ class JackTokenizer:
 
             if token in self.keywords:
                 return f'<keyword> {token} </keyword>'
+            elif re.match(string_pattern, token):
+                # Strip quotes for string constants
+                return f'<stringConstant> {token[1:-1]} </stringConstant>' 
+            elif re.match(int_pattern, token):
+                return f'<integerConstant> {token} </integerConstant>'                           
             elif token in self.symbols:
                 # Replace symbol with XML entity if needed
                 token = self.xml_symbol_replacements.get(token, token)
                 return f'<symbol> {token} </symbol>'
-            elif token.isdigit():
-                return f'<integerConstant> {token} </integerConstant>'
-            elif token.startswith('"') and token.endswith('"'):
-                # Strip quotes for string constants
-                return f'<stringConstant> {token[1:-1]} </stringConstant>'
             else:
                 return f'<identifier> {token} </identifier>'
 
@@ -866,6 +868,7 @@ class JackCompiler:
         codes = tokenizer.remove_comments()
         code_snippet = "\n".join(codes)
         tokenized_xml = tokenizer.tokenize(code_snippet)
+        tokenizer.save_token_file(tokenized_xml)
         engine = CompilationEngine(tokenized_xml, tokenizer.file_name[:-5])
         engine.compile_class()
         method_names = engine.get_method_names()
@@ -1221,7 +1224,7 @@ class VMWriter:
                 return
 
         # handle array: arr[expression]
-        elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1 and term.find("./identifier").attrib["type"] == "Array" and len(term.findall("./symbol")) == 2:
+        elif term.find("./identifier") is not None and len(term.findall("./identifier")) == 1 and term.find("./identifier").get("type") == "Array" and len(term.findall("./symbol")) == 2:
             # push arr
             element = term.find("./identifier")
             _category = element.attrib["category"]
