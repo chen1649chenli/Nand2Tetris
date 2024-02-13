@@ -85,8 +85,6 @@ class Math {
             let i = i + 1;
         }
         return sum;
-
-
     }
 
     function boolean isIthBitSet(int x, int i) {
@@ -119,25 +117,38 @@ class Math {
     function int divide(int x, int y) {
         var int result;
         let result = 0;
-        if ((y > x) | (y < 0)) {
-            return 0;
-        }
+
         if (x = 0) {
             return 0;
         }
 
-        if (x < 0) {
+        if ((x < 0) & (y > 0)) {
             let result = Math.divideHelp(Math.abs(x), y);
             return -result;
-        } else {
+        } 
+
+        if ((x > 0) & (y < 0)) {
+            let result = Math.divideHelp(x, Math.abs(y));
+            return -result;
+        } 
+
+        if ((x < 0) & (y < 0)) {
+            let result = Math.divideHelp(Math.abs(x), Math.abs(y));
+            return result;
+        } 
+
+        if ((x > 0) & (y > 0)) {
             return Math.divideHelp(x, y);
-        }
+        } 
+
+        // should not reach here.
+        return 0;
     }
 
     function int divideHelp(int numerator, int divider) {
         var int quotient;
         let quotient = 0;
-        if (divider > numerator) {
+        if ((divider > numerator) | (divider < 0)) {
             return 0;
         }
 
