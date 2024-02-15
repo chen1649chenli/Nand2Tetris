@@ -163,8 +163,6 @@ class Math {
         var int y, j, n, tmp;
         let y = 0;
         let n = Math.getNumberBitCount(x);
-        do Output.printInt(n);
-        do Output.printString("|");
         // let j = (n / 2) - 1;
         let j = (n / 2);
         while (j > (-1)) {
