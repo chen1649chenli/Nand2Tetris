@@ -104,6 +104,11 @@ class Screen {
             return;
         }
 
+        if (x1 > x2) {
+            do Screen.drawLine(x2, y2, x1, y1);
+            return;
+        }
+
         if (y1 = y2) {
             do Screen.drawHorizontalLine(x1, x2, y1);
             return;
@@ -273,6 +278,16 @@ class Screen {
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
+        var int x1, x2, y1, y2, dy;
+        let dy = -r;
+        while (dy < (r + 1)) {
+            let x1 = x - Math.sqrt((r * r) - (dy * dy));
+            let y1 = y + dy;
+            let x2 = x + Math.sqrt((r * r) - (dy * dy));
+            let y2 = y + dy;
+            do Screen.drawLine(x1, y1, x2, y2);
+            let dy = dy + 1;
+        }
         return;
     }
 }
