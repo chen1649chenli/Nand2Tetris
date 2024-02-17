@@ -82,7 +82,8 @@ class Screen {
             let value = (value | blackMask[bitIndex]);
             do Memory.poke(address + screenBase, value);
         } else { // draw white pixel
-            let value = (value | whiteMask[bitIndex]);
+            let value = (value & whiteMask[bitIndex]);
+            do Memory.poke(address + screenBase, value);
         }
         return;
     }
