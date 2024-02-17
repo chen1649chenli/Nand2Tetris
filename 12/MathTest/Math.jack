@@ -262,6 +262,7 @@ class Math {
         }
         return result;
     }
+    
     function int pow2(int exponent) {
         var int result;
         let result = 1;
@@ -270,5 +271,9 @@ class Math {
             let exponent = exponent - 1;
         }
         return result;
+    }
+
+    function int mode(int x, int y) {
+        return x - (y * (x / y));
     }
 }
