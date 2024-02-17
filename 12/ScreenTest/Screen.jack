@@ -61,6 +61,14 @@ class Screen {
 
     /** Erases the entire screen. */
     function void clearScreen() {
+        var int i, value;
+        let i = 0;
+        while(i < 8192) {
+            // let value = Memory.peek(i + screenBase);
+            // let value = value & 0;
+            do Memory.poke(i + screenBase, 0);
+            let i = i + 1;
+        }
         return;
     }
 
