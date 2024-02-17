@@ -64,8 +64,6 @@ class Screen {
         var int i, value;
         let i = 0;
         while(i < 8192) {
-            // let value = Memory.peek(i + screenBase);
-            // let value = value & 0;
             do Memory.poke(i + screenBase, 0);
             let i = i + 1;
         }
@@ -119,6 +117,11 @@ class Screen {
 
         if (y1 = y2) {
             do Screen.drawHorizontalLine(x1, x2, y1);
+            return;
+        }
+
+        if (x1 = x2) {
+            do Screen.drawVerticalLine(x1, y1, y2);
             return;
         }
 
@@ -269,6 +272,37 @@ class Screen {
     }
 
     function void drawVerticalLine(int x, int y1, int y2) {
+        var int i, address, bitIndex, value, maskVal;
+        
+        if (y1 > y2) {
+            do Screen.drawVerticalLine(x, y2, y1);
+            return;
+        }
+        let i = y2 - y1 + 1;
+
+        let address = (32 * y1) + (x / 16);
+        
+        let bitIndex = 15 - Math.mode(x, 16);
+
+
+        if (color) { // draw black pixel
+            let maskVal = blackMask[bitIndex];
+            
+            while (i > 0) {
+                let value = Memory.peek(address + screenBase + (32 * (i - 1)));
+                let value = (value | maskVal);
+                do Memory.poke(address + screenBase + (32 * (i - 1)), value);
+                let i = i - 1;
+            }
+        } else { // draw white pixel
+            let maskVal = whiteMask[bitIndex];
+            while (i > 0) {
+                let value = Memory.peek(address + screenBase + (32 * (i - 1)));
+                let value = (value & maskVal);
+                do Memory.poke(address + screenBase + (32 * (i - 1)), value);
+                let i = i - 1;
+            }
+        }
         return;
     }
 
