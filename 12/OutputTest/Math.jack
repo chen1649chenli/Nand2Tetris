@@ -1,0 +1,279 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+    static Array powersOfTwo;
+
+    /** Initializes the library. */
+    function void init() {
+        var int i, currentBitValue;
+        let powersOfTwo = Array.new(15);
+        let i = 0;
+        let currentBitValue = 1;
+        while(i < 15) {
+            let powersOfTwo[i] = currentBitValue;
+            let i = i + 1;
+            let currentBitValue = currentBitValue + currentBitValue;
+        }
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x < 0) {
+            return -x;
+        } else {
+            return x;
+        }
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+        var int result;
+        if ((x = 0) | (y = 0)) {
+            return 0;
+        }
+
+        if ((x < 0) & (y > 0)) {
+            let result = Math.multiplyHelp(Math.abs(x), y);
+            return -result;
+        }
+
+        if ((x > 0) & (y < 0)) {
+            let result = Math.multiplyHelp(x, Math.abs(y));
+            return -result;
+        }
+
+        if ((x > 0) & (y > 0)) {
+            return Math.multiplyHelp(x, y);
+        }
+
+        if ((x < 0) & (y < 0)) {
+            return Math.multiplyHelp(Math.abs(x), Math.abs(y));
+        }
+
+        // should not reach here.
+        return 0;
+    }
+
+    // Helper function in which the x and y are both positive integers.
+    function int multiplyHelp(int x, int y) {
+        var int sum, shiftedX, i, w;
+        var Array binaryDigitsArray;
+        let sum = 0;
+        let shiftedX = x;
+        let i = 0;
+        let w = Math.getNumberBitCount(y);
+
+        while(i < w) {
+            if (Math.isIthBitSet(y, i)) {
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;
+            let i = i + 1;
+        }
+        return sum;
+    }
+
+    function boolean isIthBitSet(int x, int i) {
+        var int power, subtractedValue, j;
+        let power = powersOfTwo[i];
+        let subtractedValue = x;
+        let j = 14;
+
+        while (j > i) {
+            if ((subtractedValue > powersOfTwo[j]) | (subtractedValue = powersOfTwo[j])) {
+                let subtractedValue = subtractedValue - powersOfTwo[j];
+            }
+            let j = j - 1;
+        }
+
+        //Now check if after reducing, the i-th bit is set.
+        if ((subtractedValue > power) | (subtractedValue = power)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+        var int result;
+        let result = 0;
+
+        if (x = 0) {
+            return 0;
+        }
+
+        if ((x < 0) & (y > 0)) {
+            let result = Math.divideHelp(Math.abs(x), y);
+            return -result;
+        } 
+
+        if ((x > 0) & (y < 0)) {
+            let result = Math.divideHelp(x, Math.abs(y));
+            return -result;
+        } 
+
+        if ((x < 0) & (y < 0)) {
+            let result = Math.divideHelp(Math.abs(x), Math.abs(y));
+            return result;
+        } 
+
+        if ((x > 0) & (y > 0)) {
+            return Math.divideHelp(x, y);
+        } 
+
+        // should not reach here.
+        return 0;
+    }
+
+    function int divideHelp(int numerator, int divider) {
+        var int quotient;
+        let quotient = 0;
+        if ((divider > numerator) | (divider < 0)) {
+            return 0;
+        }
+
+        let quotient = Math.divideHelp(numerator, divider + divider);
+        if ((numerator - ((quotient + quotient) * divider)) < divider) {
+            return quotient + quotient;
+        } else {
+            return (quotient + quotient) + 1;
+        }
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int y, j, n, tmp;
+        let y = 0;
+        let n = Math.getNumberBitCount(x);
+        // let j = (n / 2) - 1;
+        let j = (n / 2);
+        while (j > (-1)) {
+            let tmp = (y + Math.pow2(j)) * (y + Math.pow2(j));
+            if ((tmp > 0) & ((tmp < x) | (tmp = x))) {
+                let y = y +  Math.pow2(j);
+            }
+            let j = j - 1;
+        }
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if (a > b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if (a < b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
+    function int getNumberBitCount(int x) {
+        if (x < 2) {
+            return 1;
+        } else {
+            if (x < 4) {
+                return 2;
+            } else {
+                if (x < 8) {
+                    return 3;
+                } else {
+                    if (x < 16) {
+                        return 4;
+                    } else {
+                        if (x < 32) {
+                            return 5;
+                        } else {
+                            if (x < 64) {
+                                return 6;
+                            } else {
+                                if (x < 128) {
+                                    return 7;
+                                } else {
+                                    if (x < 256) {
+                                        return 8;
+                                    } else {
+                                        if (x < 512) {
+                                            return 9;
+                                        } else {
+                                            if (x < 1024) {
+                                                return 10;
+                                            } else {
+                                                if (x < 2048) {
+                                                    return 11;
+                                                } else {
+                                                    if (x < 4096) {
+                                                        return 12;
+                                                    } else {
+                                                        if (x < 8192) {
+                                                            return 13;
+                                                        } else {
+                                                            if (x < 16384) {
+                                                                return 14;
+                                                            } else {
+                                                                return 15;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function int pow(int base, int exponent) {
+        var int result;
+        let result = 1;
+        while(exponent > 0) {
+            let result = result * base;
+            let exponent = exponent - 1;
+        }
+        return result;
+    }
+
+    function int pow2(int exponent) {
+        var int result;
+        let result = 1;
+        while(exponent > 0) {
+            let result = result + result;
+            let exponent = exponent - 1;
+        }
+        return result;
+    }
+
+    function int mode(int x, int y) {
+        return x - (y * (x / y));
+    }
+}
