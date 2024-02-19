@@ -32,7 +32,10 @@ class Main {
        	        do Output.printString("ok");
 	            do Output.println();
 	            let ok = true;
-	        }
+            }
+            else {
+                do Output.printInt(c);
+            }
 	    }
 	
 	    let ok = false;

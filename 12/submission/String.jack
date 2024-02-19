@@ -18,7 +18,12 @@ class String {
     /** constructs a new empty string with a maximum length of maxLength
      *  and initial length of 0. */
     constructor String new(int maxLength) {
-        let str = Array.new(maxLength);
+        if (maxLength = 0) {
+            let strMaxLength = 1;
+        } else {
+            let strMaxLength = maxLength;
+        }
+        let str = Array.new(strMaxLength);
         let length = 0;
         let strMaxLength = maxLength;
         return this;
@@ -42,6 +47,10 @@ class String {
 
     /** Sets the character at the j-th location of this string to c. */
     method void setCharAt(int j, char c) {
+        if ((j > strMaxLength) | (j = strMaxLength)){
+            return;
+        }
+
         let str[j] = c;
         return;
     }
@@ -100,23 +109,53 @@ class String {
 
     /** Sets this string to hold a representation of the given value. */
     method void setInt(int val) {
-        var int lastDigit, n;
-		var int c;
-		if(val < 0) {
-			do appendChar(45);
-			let val= -val;
-		}
-		let n = val / 10;
-		let lastDigit = val - (n * 10); // modding
-		let c = lastDigit + 48;
-		if(val < 10) {
-			do appendChar(c);
-		} else {
-			do setInt(n);
-			do appendChar(c);
-		}
-		return;
-    }
+        var boolean isNegative;
+
+        // handle negatives
+        if (val < 0) {
+            let val = -val;
+            let isNegative = true;
+        } else {
+            let isNegative = false;
+        }
+  
+        // modulus
+        do setIntHelp(val, isNegative);
+
+        return;
+      }
+
+      method void setIntHelp(int val, boolean flag) {
+        var int lastDigit, c;
+
+        // modulus
+        let lastDigit = val - (val / 10 * 10);
+        let c = 48 + lastDigit;
+
+        if (flag) {
+            if (val < 10) { // only for first digit
+                let length = 0;
+    
+                do appendChar(45); // prepend neg sign
+                do appendChar(c);
+            } else {
+                do setIntHelp(val / 10, flag);
+                do appendChar(c);
+            }
+            
+        } else {
+            if (val < 10) { // only for first digit
+                let length = 0;
+                do appendChar(c);
+            } else {
+                do setIntHelp(val / 10, flag);
+                do appendChar(c);
+            }
+        }
+  
+        return;
+      }
+
 
     /** Returns the new line character. */
     function char newLine() {
