@@ -343,11 +343,11 @@ class CompilationEngine:
         self.output.append("<parameterList>")
 
         # Add 'this' as the first parameter of class method
-        # if subroutine_type == 'method':
-        #     self.subroutine_symbol_table.define("this", class_name, VariableKind.ARG)
-        #     this_index = str(self.subroutine_symbol_table.index_of("this"))
-        #     self.output.append(f"<identifier category='class' purpose='used'> {class_name} </identifier>")
-        #     self.output.append(f"<identifier category='argument' purpose='defined' index='{this_index}' type='{class_name}'> this </identifier>")
+        if subroutine_type == 'method':
+            self.subroutine_symbol_table.define("this", class_name, VariableKind.ARG)
+            # this_index = str(self.subroutine_symbol_table.index_of("this"))
+            # self.output.append(f"<identifier category='class' purpose='used'> {class_name} </identifier>")
+            # self.output.append(f"<identifier category='argument' purpose='defined' index='{this_index}' type='{class_name}'> this </identifier>")
         
 
         # Check if there is at least one parameter
@@ -369,6 +369,7 @@ class CompilationEngine:
                 # varName
                 _value = self.eat("identifier")
                 self.subroutine_symbol_table.define(_value, type_token_value, VariableKind.ARG)
+                # speical_index = 1 if subroutine_type == 'method' else  0
                 _index = str(self.subroutine_symbol_table.index_of(_value))
                 self.output.append(f"<identifier category='argument' purpose='defined' index='{_index}' type='{type_token_value}'> {_value} </identifier>")
 
@@ -868,22 +869,20 @@ class JackCompiler:
         codes = tokenizer.remove_comments()
         code_snippet = "\n".join(codes)
         tokenized_xml = tokenizer.tokenize(code_snippet)
-        tokenizer.save_token_file(tokenized_xml)
+        # tokenizer.save_token_file(tokenized_xml)
         engine = CompilationEngine(tokenized_xml, tokenizer.file_name[:-5])
         engine.compile_class()
         method_names = engine.get_method_names()
-        print("=== Method Names:    " + str(method_names))
         class_name = engine.get_class_name()
-        print("=== Class Names:    " + class_name)
 
-        result = engine.format_xml_string()
-        engine.save_xml_file(result)
+        # result = engine.format_xml_string()
+        # engine.save_xml_file(result)
 
         xml = engine.get_xml_representation()
         vm_outputfile_name = tokenizer.file_name[:-5] + ".vm"
         vm_code_generator = VMWriter(vm_outputfile_name, xml, method_names, class_name)
         vm_code_generator.compile()
-        print(vm_code_generator.vm_codes)
+        # print(vm_code_generator.vm_codes)
         vm_code_generator.close()
 
     def analyze(self):
